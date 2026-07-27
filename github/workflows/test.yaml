@@ -14,4 +14,3 @@ jobs:
     steps:
       - name: greeting2
         run: echo "hello world2"
-        
