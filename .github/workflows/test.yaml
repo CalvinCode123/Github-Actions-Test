@@ -1,5 +1,9 @@
 name: Demo Workflow 2
-on: workflow_dispatch
+
+run-name: "${{ github.ref_name }} - Run #${{ github.run_number }}"
+
+on:
+  workflow_dispatch:
 
 env:
   OS_NAME: Ubuntu Machine
@@ -7,20 +11,23 @@ env:
 jobs:
   gather-data:
     runs-on: ubuntu-latest
+
     steps:
       - name: Capture VM info
-        run: | 
-          echo "USERNAME=$(whoami)" >> $GITHUB_ENV
+        run: |
           source /etc/os-release
-          echo "OS_INFO=${NAME} ${VERSION}" >> $GITHUB_ENV          
+
+          echo "USERNAME=$(whoami)" >> $GITHUB_ENV
+          echo "OS_INFO=${NAME} ${VERSION}" >> $GITHUB_ENV
           echo "USER_ID=$(id -u)" >> $GITHUB_ENV
           echo "WORK_DIR=$(pwd)" >> $GITHUB_ENV
+
       - name: Make File
         run: |
-          echo -e "Artifact_upload:\n OS: $OS_NAME"\nuser: $USERNAME, USERID: $USER_ID\nWorking directory: $WORK_DIR >> artifact_upload
-      - name: Upload Artifact 
+          echo -e "Branch: ${{ github.ref_name }}\nRun Number: ${{ github.run_number }}\nOS: $OS_INFO\nUser: $USERNAME\nUser ID: $USER_ID\nWorking Directory: $WORK_DIR" > artifact_upload
+
+      - name: Upload Artifact
         uses: actions/upload-artifact@v7
         with:
           name: Artifact Upload
-          path: |
-            artifact_upload
+          path: artifact_upload
