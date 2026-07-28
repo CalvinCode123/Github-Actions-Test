@@ -16,7 +16,7 @@ jobs:
           echo "WORK_DIR=$(pwd)" >> GITHUB_ENV
       - name: Make File
         run: |
-          echo "Artifact_upload: -e OS: $OS_NAME" -e user: $USERNAME, USERID: $USER_ID -e Working directory: $WORK_DIR>> artifact_upload
+          echo "Artifact_upload: -e OS: $OS_NAME" -e user: $USERNAME, USERID: $USER_ID -e Working directory: $WORK_DIR >> artifact_upload
       - name: Upload Artifact 
         uses: actions/upload-artifact@v7
         with:
