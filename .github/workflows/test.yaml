@@ -1,14 +1,17 @@
 name: Demo Workflow 2
 on: workflow_dispatch
 
+env:
+  OS_NAME: Ubuntu Machine
+
 jobs:
   gather-data:
     runs-on: ubuntu-latest
     steps:
       - name: Make File
         run: |
-          echo "Hello from artifact_upload1" >> artifact_upload1
-          echo "Hello from artifact_upload2" >> artifact_upload2
+          echo "Hello from artifact_upload1, echo from $OS_NAME" >> artifact_upload1
+          echo "Hello from artifact_upload2, echo from $OS_NAME" >> artifact_upload2
       - name: Upload Artifact 
         uses: actions/upload-artifact@v7
         with:
