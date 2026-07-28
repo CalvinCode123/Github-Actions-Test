@@ -10,13 +10,14 @@ jobs:
     steps:
       - name: Capture VM info
         run: | 
-          echo "USERNAME=$(whoami)" >> GITHUB_ENV
+          echo "USERNAME=$(whoami)" >> $GITHUB_ENV
+          source /etc/os-release
           echo "OS_INFO=${NAME} ${VERSION}" >> $GITHUB_ENV          
-          echo "USER_ID=$(id -u)" >> GITHUB_ENV
-          echo "WORK_DIR=$(pwd)" >> GITHUB_ENV
+          echo "USER_ID=$(id -u)" >> $GITHUB_ENV
+          echo "WORK_DIR=$(pwd)" >> $GITHUB_ENV
       - name: Make File
         run: |
-          echo "Artifact_upload: -e OS: $OS_NAME" -e user: $USERNAME, USERID: $USER_ID -e Working directory: $WORK_DIR >> artifact_upload
+          echo -e "Artifact_upload:\n OS: $OS_NAME"\nuser: $USERNAME, USERID: $USER_ID\nWorking directory: $WORK_DIR >> artifact_upload
       - name: Upload Artifact 
         uses: actions/upload-artifact@v7
         with:
